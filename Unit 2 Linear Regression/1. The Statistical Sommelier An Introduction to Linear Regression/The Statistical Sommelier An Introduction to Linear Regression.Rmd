@@ -1,0 +1,119 @@
+---
+title: "Wine"
+author: "Jaime"
+date: "26/4/2021"
+output: html_document
+---
+
+## Video 4: Linear Regression in R
+```{r}
+wine=read.csv("C:/Users/Jaime Yair Perez/Downloads/wine.csv")
+str(wine)
+```
+
+```{r}
+summary(wine)
+```
+
+```{r}
+model1=lm(Price ~ AGST, data=wine)
+summary(model1)
+```
+
+```{r}
+model1$residuals
+```
+
+```{r}
+SSE = sum(model1$residuals^2)
+SSE
+```
+
+```{r}
+model2=lm(Price ~ AGST + HarvestRain, data=wine)
+summary(model2)
+```
+
+```{r}
+SSE = sum(model2$residuals^2)
+SSE
+```
+
+```{r}
+model3=lm(Price ~ AGST + HarvestRain + WinterRain + Age + FrancePop, data=wine)
+summary(model3)
+```
+
+```{r}
+SSE = sum(model3$residuals^2)
+SSE
+```
+
+
+## Video 5: Understanding the Model
+```{r}
+model4=lm(Price ~ AGST + HarvestRain + WinterRain + Age, data=wine)
+summary(model4)
+```
+
+```{r}
+SSE = sum(model4$residuals^2)
+SSE
+```
+
+
+
+## Video 6: Correlation and Multicollinearity
+
+```{r}
+cor(wine$WinterRain , wine$Price)
+```
+```{r}
+cor(wine$Age, wine$FrancePop)
+```
+
+```{r}
+cor(wine)
+```
+
+```{r}
+model5=lm(Price ~  AGST + HarvestRain + WinterRain , data=wine)
+summary(model5)
+```
+
+```{r}
+SSE = sum(model5$residuals^2)
+SSE
+```
+
+
+## Video 7: Making Predictions
+```{r}
+wineTest= read.csv("C:/Users/Jaime Yair Perez/Downloads/wine_test.csv")
+str(wineTest)
+```
+
+```{r}
+predictTest=predict(model4, newdata=wineTest)
+predictTest
+```
+
+```{r}
+SSE = sum((wineTest$Price-predictTest)^2)
+SST=sum((wineTest$Price-mean(wine$Price))^2)
+1-SSE/SST
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
